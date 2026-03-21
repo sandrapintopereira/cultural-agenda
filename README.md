@@ -26,4 +26,3 @@ Free culture is often invisible to many people. This platform makes these events
 ## How to run locally
 
 (to be added)
-
