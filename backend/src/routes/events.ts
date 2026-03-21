@@ -24,7 +24,7 @@ router.get('/', async (req: Request, res: Response) => {
   //executa a query e aguarda o resultado
   const { data, error } = await query;
 
-  if (error) return res.status(500).json({ error: error.message });
+  if(error) return res.status(500).json({ error: error.message });
 
   return res.json(data);
 });
@@ -40,9 +40,24 @@ router.get('/:id', async (req: Request, res: Response) => {
         .eq('id', id) //filtro por id
         .single(); 
 
-    if (error) return res.status(404).json({ error: 'Event not found' });
+    if(error) return res.status(404).json({ error: 'Event not found' });
 
     return res.json(data);
 });
 
 //rota POST - para criar novo evento
+router.post('/', async (req: Request, res: Response) => {
+    //dados do evento que vem no body do pedido
+    const { title, type, date, time, location, description, is_free, user_id } = req.body;
+
+    //para inserir o evento na tabela 
+    const { data, error } = await supabase
+        .from('events')
+        .insert([{ title, type, date, time, location, description, is_free, user_id }])
+        .select()   //para devolver o evento criado
+        .single();  
+
+    if(error) return res.status(500).json({ error: error.message });
+
+    return res.status(201).json(data);
+});
