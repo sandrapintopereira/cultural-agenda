@@ -61,3 +61,42 @@ router.post('/', async (req: Request, res: Response) => {
 
     return res.status(201).json(data);
 });
+
+//rota PUT - editar evento que já existe
+router.put('/:id', async (req: Request, res:Response) => {
+    //id do evento a editar
+    const { id } = req.params;
+
+    //dados atualizados do body
+    const { title, type, date, time, location, description, is_free } = req.body;
+
+    //atualiza o evento na tabela
+    const { data, error } = await supabase
+        .from('events')
+        .update({ title, type, date, time, location, description, is_free })
+        .eq('id', id)
+        .select()
+        .single();
+
+    if(error) return res.status(500).json({ error: error.message });
+
+    return res.json(data);
+});
+
+//rota DELETE 
+router.delete('/:id', async (req: Request, res: Response) => {
+
+    const { id } = req.params;
+
+    const { error } = await supabase
+        .from('events')
+        .delete()
+        .eq('id', id);
+
+    if(error) return res.status(500).json({ error: error.message });
+
+    //204 - sem conteúdo aka eliminado
+    return res.status(204).send();
+});
+
+export default router; 
