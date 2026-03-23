@@ -21,7 +21,7 @@ Free culture is often invisible to many people. This platform makes these events
 ## Production URLs
 
 - Frontend: (coming soon)
-- Backend: (coming soon)
+- Backend: https://cultural-agenda.onrender.com
 
 ## How to run locally
 
