@@ -51,6 +51,31 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
     //dados do evento que vem no body do pedido
     const { title, type, date, time, location, description, is_free, user_id } = req.body;
 
+    //validação de campos obrigatórios
+    if(!title || !type || !date || !time || !location) {
+        return res.status(400).json({
+            error: 'Missing required fields: title, type, date, time, location.'
+        });
+    }
+
+    //validação do tipo de evento
+    const validTypes = ['concert', 'exhibition', 'reading', 'theatre', 'other'];
+    if(!validTypes.includes(type)) {
+        return res.status(400).json({
+            error: `Invalid type. Must be one of: ${validTypes.join(', ')}`
+        });
+    } 
+
+    //validação da data 
+    const eventDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0 , 0, 0);
+    if(eventDate < today) {
+        return res.status(400).json({
+            error: 'Event date must be in the future'
+        });
+    }
+
     //para inserir o evento na tabela 
     const { data, error } = await supabase
         .from('events')
