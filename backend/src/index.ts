@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import eventsRouter from './routes/events.js';
+import attendancesRouter from './routes/attendances.js';
 
 dotenv.config();
 
@@ -16,6 +17,9 @@ app.get('/', (req, res) => {
 
 //rotas dos events
 app.use('/events', eventsRouter);
+
+//rotas de presenças 
+app.use('/events', attendancesRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
