@@ -22,3 +22,24 @@ router.post('/:id/attend', async (req: Request, res: Response) => {
 
     return res.status(201).json(data);
 });
+
+//DELETE - cancelar presença num evento
+router.delete('/:id/attend', async (req: Request, res: Response) => {
+
+    const { id } = req.params;
+
+    const { user_id } = req.body;
+
+    //para eliminar presença na tabela
+    const { error } = await supabase
+        .from('attendances')
+        .delete()
+        .eq('event_id', id) //filtra pelo evento
+        .eq('user_id', user_id); //filtra pelo user
+
+    if(error) return res.status(500).json({ error: error.message });
+
+    return res.status(204).send();
+});
+
+export default router;
