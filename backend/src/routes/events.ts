@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { supabase } from '../config/supabase.js';
+import { authMiddleware } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -46,7 +47,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 //rota POST - para criar novo evento
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', authMiddleware, async (req: Request, res: Response) => {
     //dados do evento que vem no body do pedido
     const { title, type, date, time, location, description, is_free, user_id } = req.body;
 
@@ -63,7 +64,7 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 //rota PUT - editar evento que já existe
-router.put('/:id', async (req: Request, res:Response) => {
+router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
     //id do evento a editar
     const { id } = req.params;
 
@@ -84,7 +85,7 @@ router.put('/:id', async (req: Request, res:Response) => {
 });
 
 //rota DELETE 
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
