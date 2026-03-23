@@ -1,11 +1,12 @@
 import { Router, Request, Response } from 'express';
 import { supabase } from '../config/supabase.js';
+import { authMiddleware } from '../middleware/auth.js';
 
 const router = Router();
 
 
 //POST - registar presença num evento
-router.post('/:id/attend', async (req: Request, res: Response) => {
+router.post('/:id/attend', authMiddleware, async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
@@ -24,7 +25,7 @@ router.post('/:id/attend', async (req: Request, res: Response) => {
 });
 
 //DELETE - cancelar presença num evento
-router.delete('/:id/attend', async (req: Request, res: Response) => {
+router.delete('/:id/attend', authMiddleware, async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
