@@ -12,6 +12,18 @@ router.post('/:id/attend', authMiddleware, async (req: Request, res: Response) =
 
     const { user_id } = req.body;
 
+    //verifica se o evento existe antes de registar presença
+    const { data: event, error: eventError } = await supabase
+        .from('events')
+        .select('id')
+        .eq('id', id)
+        .single();
+
+    //se o evento não existir
+    if (eventError || !event) {
+        return res.status(404).json({ error: 'Event not found' });
+    }
+
     //para inserir o id do utlizador na tabela
     const { data, error } = await supabase
         .from('attendances')
