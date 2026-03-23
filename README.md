@@ -23,6 +23,23 @@ Free culture is often invisible to many people. This platform makes these events
 - Frontend: (coming soon)
 - Backend: https://cultural-agenda.onrender.com
 
+
+## API Endpoints
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | /events | No | List upcoming events |
+| GET | /events/:id | No | Get event details |
+| POST | /events | Yes | Create event |
+| PUT | /events/:id | Yes | Update event |
+| DELETE | /events/:id | Yes | Delete event |
+| POST | /events/:id/attend | Yes | Register attendance |
+| DELETE | /events/:id/attend | Yes | Cancel attendance |
+
 ## How to run locally
 
-(to be added)
+1. Clone the repository
+2. `cd backend`
+3. `npm install`
+4. Create `.env` with your Supabase credentials
+5. `npm run dev`
