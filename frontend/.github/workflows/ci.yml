@@ -32,6 +32,7 @@ jobs:
             production: false,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
             supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }},
           };
           EOF
 
@@ -40,6 +41,7 @@ jobs:
             production: false,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
             supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }},
           };
           EOF
 
