@@ -28,14 +28,13 @@ jobs:
         run: npm run lint
 
       - name: Create environment file
-        working-directory: ./frontend
         run: |
-          mkdir -p src/environments
+          mkdir -p frontend/src/environments
           echo "export const environment = {
             production: false,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
             supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}'
-            };" > src/environments/environment.ts
+            };" > frontend/src/environments/environment.ts
 
       - name: Build frontend
         working-directory: ./frontend
