@@ -49,7 +49,8 @@ router.get('/:id', async (req: Request, res: Response) => {
 //rota POST - para criar novo evento
 router.post('/', authMiddleware, async (req: Request, res: Response) => {
     //dados do evento que vem no body do pedido
-    const { title, type, date, time, location, description, is_free, user_id } = req.body;
+    const { title, type, date, time, location, description, is_free } = req.body;
+    const user = (req as any).user;
 
     //validação de campos obrigatórios
     if(!title || !type || !date || !time || !location) {
@@ -79,7 +80,7 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
     //para inserir o evento na tabela 
     const { data, error } = await supabase
         .from('events')
-        .insert([{ title, type, date, time, location, description, is_free, user_id }])
+        .insert([{ title, type, date, time, location, description, is_free, user_id: user.id }])
         .select()   //para devolver o evento criado
         .single();  
 

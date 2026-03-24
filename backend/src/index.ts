@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import eventsRouter from './routes/events.js';
 import attendancesRouter from './routes/attendances.js';
+import profilesRouter from './routes/profiles.js';
 
 dotenv.config();
 
@@ -20,6 +21,9 @@ app.use('/events', eventsRouter);
 
 //rotas de presenças 
 app.use('/events', attendancesRouter);
+
+//rotas de perfis 
+app.use('/profiles', profilesRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
