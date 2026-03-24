@@ -27,22 +27,19 @@ jobs:
         working-directory: ./frontend
         run: |
           mkdir -p src/environments
-
-          # base file (OBRIGATÓRIO)
           cat > src/environments/environment.ts <<EOF
           export const environment = {
             production: false,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
           };
           EOF
 
-          # development override
           cat > src/environments/environment.development.ts <<EOF
           export const environment = {
             production: false,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
           };
           EOF
 
