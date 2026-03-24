@@ -19,24 +19,26 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Debug environment files
-        working-directory: ./frontend
-        run: |
-          mkdir -p src/environments
-          echo "export const environment = { production: false, supabaseUrl: 'debug-url', supabaseKey: 'debug-key', apiUrl: 'debug-api' };" > src/environments/environment.ts
-          echo "=== LISTA DE FICHEIROS ==="
-          ls -la src/environments/
-          echo "=== CONTEÚDO DO FICHEIRO ==="
-          cat src/environments/environment.ts
-          echo "=== CAMINHO ATUAL ==="
-          pwd
-          echo "=== ESTRUTURA DO PROJETO ==="
-          find src -name "*.ts" | head -10
-
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
 
+      - name: Generate environment.ts
+        working-directory: ./frontend
+        run: |
+          mkdir -p src/environments
+          cat > src/environments/environment.development.ts <<EOF
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ env.SUPABASE_URL }}',
+            supabaseKey: '${{ env.SUPABASE_KEY }}',
+          };
+          EOF
+          
       - name: Lint frontend
         working-directory: ./frontend
         run: npm run lint
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
