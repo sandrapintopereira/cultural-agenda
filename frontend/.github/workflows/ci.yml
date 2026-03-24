@@ -19,17 +19,14 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Create environment files
+      - name: Debug environment files
         working-directory: ./frontend
         run: |
           mkdir -p src/environments
-          echo "export const environment = {
-            production: false,
-            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
-            apiUrl: '${{ secrets.API_URL }}'
-          };" > src/environments/environment.ts
-          cp src/environments/environment.ts src/environments/environment.development.ts
+          echo "export const environment = { production: false, supabaseUrl: 'debug-url', supabaseKey: 'debug-key', apiUrl: 'debug-api' };" > src/environments/environment.ts
+          ls -la src/environments/
+          cat src/environments/environment.ts
+          pwd
 
       - name: Install frontend dependencies
         working-directory: ./frontend
