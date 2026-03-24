@@ -19,7 +19,6 @@ jobs:
         with:
           node-version: '20'
 
-      # DEBUG - VÊ SE O FICHEIRO É CRIADO
       - name: Debug environment files
         working-directory: ./frontend
         run: |
