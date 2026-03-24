@@ -31,10 +31,12 @@ jobs:
         run: |
           mkdir -p frontend/src/environments
           echo "export const environment = {
-            production: false,
+            production: true,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}'
-            };" > frontend/src/environments/environment.ts
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '%{{ secrets.API_URL }}'
+          };" > frontend/src/environments/environment.ts
+          cp frontend/src/environments/environment.ts frontend/src/environments/environment.development.ts
 
       - name: Build frontend
         working-directory: ./frontend
