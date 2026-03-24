@@ -28,6 +28,7 @@ jobs:
         run: npm run lint
 
       - name: Create environment file
+        working-directory: ./frontend
         run: |
           mkdir -p src/environments
           echo "export const environment = {
@@ -35,7 +36,7 @@ jobs:
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
             supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}'
             };" > src/environments/environment.ts
-            
+
       - name: Build frontend
         working-directory: ./frontend
         run: npm run build
