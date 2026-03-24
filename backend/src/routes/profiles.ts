@@ -19,3 +19,31 @@ router.get('/:id', async (req: Request, res: Response) => {
     return res.json(data);
 });
 
+//POST - criar perfil 
+router.post('/', authMiddleware, async (req: Request, res: Response) => {
+    const { name, type, bio, website } = req.body;
+
+    //validação de campos obrigatórios
+    if(!name || !type) {
+        return res.status(400).json({ error: 'Missing required fields: name, type' });
+    }
+
+    //validação do tipo
+    const validTypes = ['individual', 'collective', 'artist', 'venue'];
+    if(!validTypes.includes(type)) {
+        return res.status(400).json({ error: `Invalid type: Must be one of: ${validTypes.join(', ')}`});
+    }
+
+    //usa o id do utilizador autenticado 
+    const user = (req as any).user;
+
+    const { data, error } = await supabase
+        .from('profiles')
+        .insert([{ id: user.id, name, type, bio, website }])
+        .select()
+        .single();
+
+    if(error) return res.status(500).json({ error: error.message });
+
+    return res.status(201).json(data);
+});
