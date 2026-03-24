@@ -19,6 +19,18 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Create environment files
+        working-directory: ./frontend
+        run: |
+          mkdir -p src/environments
+          echo "export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }}'
+          };" > src/environments/environment.ts
+          cp src/environments/environment.ts src/environments/environment.development.ts
+
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
@@ -26,18 +38,6 @@ jobs:
       - name: Lint frontend
         working-directory: ./frontend
         run: npm run lint
-
-      - name: Create environment file
-        working-directory: ./frontend
-        run: |
-          mkdir -p src/environments
-          echo "export const environment = {
-            production: true,
-            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
-            apiUrl: '${{ secrets.API_URL }}'
-          };" > src/environments/environment.ts
-          cp src/environments/environment.ts src/environments/environment.development.ts
 
       - name: Build frontend
         working-directory: ./frontend
