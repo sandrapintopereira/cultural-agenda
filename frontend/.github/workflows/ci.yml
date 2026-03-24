@@ -19,14 +19,20 @@ jobs:
         with:
           node-version: '20'
 
+      # DEBUG - VÊ SE O FICHEIRO É CRIADO
       - name: Debug environment files
         working-directory: ./frontend
         run: |
           mkdir -p src/environments
           echo "export const environment = { production: false, supabaseUrl: 'debug-url', supabaseKey: 'debug-key', apiUrl: 'debug-api' };" > src/environments/environment.ts
+          echo "=== LISTA DE FICHEIROS ==="
           ls -la src/environments/
+          echo "=== CONTEÚDO DO FICHEIRO ==="
           cat src/environments/environment.ts
+          echo "=== CAMINHO ATUAL ==="
           pwd
+          echo "=== ESTRUTURA DO PROJETO ==="
+          find src -name "*.ts" | head -10
 
       - name: Install frontend dependencies
         working-directory: ./frontend
