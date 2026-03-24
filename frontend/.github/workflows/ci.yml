@@ -23,6 +23,28 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
+      - name: Generate environment files
+        working-directory: ./frontend
+        run: |
+          mkdir -p src/environments
+          cat > src/environments/environment.ts <<EOF
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }}',
+          };
+          EOF
+
+          cat > src/environments/environment.development.ts <<EOF
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }}',
+          };
+          EOF
+
       - name: Lint frontend
         working-directory: ./frontend
         run: npm run lint

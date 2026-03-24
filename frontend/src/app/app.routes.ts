@@ -6,10 +6,11 @@ import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Profile } from './pages/profile/profile';
 import { About } from './pages/about/about';
+import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: Home},
-    { path: 'events/new', component: EventNew},
+    { path: 'events/new', component: EventNew, canActivate: [authGuard]},
     { path: 'events/:id', component: EventDetail},
     { path: 'login', component: Login},
     { path: 'register', component: Register},
