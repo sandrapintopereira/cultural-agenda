@@ -23,15 +23,26 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
-      - name: Generate environment.ts
+      - name: Generate environment files
         working-directory: ./frontend
         run: |
           mkdir -p src/environments
+
+          # base file (OBRIGATÓRIO)
           cat > src/environments/environment.ts <<EOF
           export const environment = {
             production: false,
-            supabaseUrl: '${{ env.SUPABASE_URL }}',
-            supabaseKey: '${{ env.SUPABASE_KEY }}',
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
+          };
+          EOF
+
+          # development override
+          cat > src/environments/environment.development.ts <<EOF
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
           };
           EOF
 
