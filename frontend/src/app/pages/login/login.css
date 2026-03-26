@@ -1,14 +1,13 @@
-/* login.component.css */
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 160px); /* Ajusta para descontar header/footer */
+  min-height: calc(100vh - 160px);
   padding: 40px 20px;
 }
 
 .auth-card {
-  background-color: var(--color-surface); /* Branco definido no teu :root */
+  background-color: var(--color-surface);
   padding: 48px;
   border-radius: 12px;
   border: 1px solid var(--color-border);
@@ -18,7 +17,7 @@
 }
 
 h2 {
-  font-family: var(--font-serif); /* Usa a Playfair Display do teu Header */
+  font-family: var(--font-serif);
   font-size: 32px;
   color: var(--color-text);
   margin-bottom: 8px;
@@ -92,10 +91,10 @@ input.input-error {
 .btn-primary {
   width: 100%;
   padding: 14px;
-  background-color: var(--color-accent); /* Cor de destaque do teu Header */
+  background-color: var(--color-accent);
   color: #ffffff;
   border: none;
-  border-radius: 999px; /* Mantém o estilo "pill" do teu btn-create */
+  border-radius: 999px;
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 600;
