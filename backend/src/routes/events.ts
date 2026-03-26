@@ -96,11 +96,12 @@ router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
 
     //dados atualizados do body
     const { title, type, date, time, location, description, is_free } = req.body;
+    const user = (req as any).user;
 
     //validação de campos obrigatórios
     if(!title || !type || !date || !time || !location) {
         return res.status(400).json({
-            error: 'Missing required fields: title, type, date, time, location.'
+            error: 'Missing required fields.'
         });
     }
 
@@ -122,6 +123,20 @@ router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
         });
     }
 
+    //verificação de user que criou evento
+    const { data: eventToCheck, error: fetchError } = await supabase
+        .from('events')
+        .select('user_id')
+        .eq('id', id)
+        .single();
+
+    if(fetchError || !eventToCheck) {
+        return res.status(404).json({ error: 'Event not found. '});
+    }
+
+    if(eventToCheck.user_id !== user.id) {
+        return res.status(403).json({ error: 'Unauthorized: You can only edit your own events.'});
+    }
     //atualiza o evento na tabela
     const { data, error } = await supabase
         .from('events')
@@ -139,11 +154,13 @@ router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
 router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
 
     const { id } = req.params;
+    const user = (req as any).user;
 
     const { error } = await supabase
         .from('events')
         .delete()
-        .eq('id', id);
+        .eq('id', id)
+        .eq('user_id', user.id);
 
     if(error) return res.status(500).json({ error: error.message });
 
