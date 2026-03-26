@@ -5,11 +5,21 @@
 
     <nav class="nav">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Explore</a>
-      <a routerLink="/login" routerLinkActive="active">Login</a>
       <a routerLink="/about" routerLinkActive="active">About</a>
+      @if (user$ | async) {
+        <a routerLink="/profile" routerLinkActive="active">Profile</a>
+      }
     </nav>
 
-    <a routerLink="/events/new" class="btn-create">Create Event</a>
+    <div class="header-actions">
+      @if (user$ | async) {
+        <a routerLink="/events/new" class="btn-create">Create Event</a>
+        <button class="btn-logout" (click)="onLogout()">Logout</button>
+      } @else {
+        <a routerLink="/login" class="btn-login">Login</a>
+        <a routerLink="/register" class="btn-create">Register</a>
+      }
+    </div>
 
   </div>
 </header>
