@@ -35,11 +35,13 @@ Free culture is often invisible to many people. This platform makes these events
 | DELETE | /events/:id | Yes | Delete event |
 | POST | /events/:id/attend | Yes | Register attendance |
 | DELETE | /events/:id/attend | Yes | Cancel attendance |
+| POST | /profiles | Yes | Create profile (runs after signup)
+| GET | /profiles/:id | No | View a specific organizer's profile
+| PUT | /profiles | Yes | Update own profile
 
 ## How to run locally
-
+Backend:
 1. Clone the repository
 2. `cd backend`
 3. `npm install`
-4. Create `.env` with your Supabase credentials
-5. `npm run dev`
+4. `npm run dev`
