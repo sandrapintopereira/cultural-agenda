@@ -105,11 +105,6 @@
   border-color: var(--color-text);
 }
 
-/* atualiza o media query existente */
-@media (max-width: 767px) {
-  
-}
-
 @media (max-width: 767px) {
     .header-inner {
         height: auto;
