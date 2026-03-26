@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
+import { UserProfile } from '../interfaces/userProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,13 @@ export class Auth {
   }
 
   //para registo com email e pass
-  async register(email: string, password: string) {
-    return await this.supabase.auth.signUp({ email, password });
+  async register(email: string, password: string, userData: UserProfile) {
+    return await this.supabase.auth.signUp({ 
+      email, 
+      password, 
+      options: {
+        data: userData
+      }});
   }
 
   //login com email e pass
