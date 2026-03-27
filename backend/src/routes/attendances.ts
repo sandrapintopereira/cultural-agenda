@@ -10,7 +10,7 @@ router.post('/:id/attend', authMiddleware, async (req: Request, res: Response) =
 
     const { id } = req.params;
 
-    const { user_id } = req.body;
+    const user_id = (req as any).user.id; //extrai o id do user autenticado
 
     //verifica se o evento existe antes de registar presença
     const { data: event, error: eventError } = await supabase
@@ -41,7 +41,7 @@ router.delete('/:id/attend', authMiddleware, async (req: Request, res: Response)
 
     const { id } = req.params;
 
-    const { user_id } = req.body;
+    const user_id = (req as any).user.id; //extrai o id do user autenticado
 
     //para eliminar presença na tabela
     const { error } = await supabase
