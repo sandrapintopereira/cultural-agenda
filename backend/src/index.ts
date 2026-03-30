@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 app.use('/events', eventsRouter);
 
 //rotas de presenças 
-app.use('/attend', attendancesRouter);
+app.use('/events', attendancesRouter);
 
 //rotas de perfis 
 app.use('/profiles', profilesRouter);
