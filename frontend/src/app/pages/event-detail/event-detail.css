@@ -140,6 +140,42 @@
 
 .organizer-website:hover { color: #333; }
 
+.owner-actions {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: 12px;
+}
+
+.edit-event-btn {
+  background: transparent;
+  border: 1px solid #382414;
+  color: #382414;
+  padding: 10px 24px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.edit-event-btn:hover { background: #f0ebe6; }
+
+.delete-event-btn {
+  background: transparent;
+  border: 1px solid #c53030;
+  color: #c53030;
+  padding: 10px 24px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.delete-event-btn:hover {
+  background: #fff5f5;
+}
+
 @media (max-width: 767px) {
   .detail-wrapper { padding: 30px 20px; }
 

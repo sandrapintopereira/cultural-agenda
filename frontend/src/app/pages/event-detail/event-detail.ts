@@ -85,4 +85,20 @@ export class EventDetail implements OnInit {
       });
     }
   }
+
+  get isOwner(): boolean {
+    return !!this.currentUser() && this.currentUser()!.id === this.event()?.user_id;
+  }
+
+  deleteEvent(): void {
+    const ev = this.event();
+    if (!ev) return;
+
+    if (confirm('Are you sure you want to delete this event?')) {
+      this.eventService.deleteEvent(ev.id).subscribe({
+        next: () => this.router.navigate(['']),
+        error: (err) => console.error('Error deleting event:', err)
+      });
+    }
+  }
 }

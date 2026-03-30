@@ -56,4 +56,23 @@ export class EventService {
     })
   );
   }
+
+  updateEvent(id: string, event: CreateEventDTO): Observable<Event> {
+    return from(this.auth.getToken()).pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        return this.http.put<Event>(`${this.apiUrl}/${id}`, event, { headers });
+      })
+    );
+  }
+
+  deleteEvent(id: string): Observable<void> {
+    return from(this.auth.getToken()).pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
+      })
+    );
+  }
+
 }
