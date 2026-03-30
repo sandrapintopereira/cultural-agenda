@@ -37,7 +37,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 
     const { data, error } = await supabase
         .from('events')
-        .select('*')
+        .select('*, attend_count(count)')
         .eq('id', id) //filtro por id
         .single(); 
 
