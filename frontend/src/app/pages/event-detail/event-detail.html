@@ -36,11 +36,11 @@
     @if(organizer()) {
         <div class="organizer">
             <span class="label">Organized by</span>
-            <div class="organizer-info">
+            <div class="organizer-info" [routerLink]="['/profile', event()!.user_id]" style="cursor: pointer">
                 <span class="organizer-name">{{ organizer()!.name }}</span>
                 <span class="organizer-type">{{ organizer()!.type }}</span>
                 @if(organizer()!.website) {
-                    <a href="organizer()!.website" target="_blank" class="organizer-website">
+                    <a href="organizer()!.website" target="_blank" class="organizer-website" (click)="$event.stopPropagation()">
                         {{ organizer()!.website }}
                     </a>
                 }
@@ -49,7 +49,7 @@
     }
     <div class="detail-footer">
       <span class="attend-count">
-        {{ event()!.attend_count?.[0]?.count ?? 0 }} people are going
+        {{ event()!.attendances?.[0]?.count ?? 0 }} people are going
       </span>
 
       <button 

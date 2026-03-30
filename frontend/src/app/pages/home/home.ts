@@ -62,8 +62,8 @@ export class Home implements OnInit {
   get popularEvent(): Event | undefined {
     //retorna o evento com maior número de participantes
     return [...this.allEvents()].sort((a, b) => {
-      const countA = a.attend_count?.[0]?.count ?? 0; //n de participantes do evento a
-      const countB = b.attend_count?.[0]?.count ?? 0; //n de participantes do evento b
+      const countA = a.attendances?.[0]?.count ?? 0; //n de participantes do evento a
+      const countB = b.attendances?.[0]?.count ?? 0; //n de participantes do evento b
       return countB - countA; //maior primeiro
     })[0];
   }

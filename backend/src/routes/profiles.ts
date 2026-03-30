@@ -3,6 +3,20 @@ import { supabase } from '../config/supabase.js';
 import { authMiddleware } from '../middleware/auth.js';
 
 const router = Router();
+// GET /profiles/me/attending — eventos que o utilizador logado vai
+router.get('/me/attending', authMiddleware, async (req: Request, res: Response) => {
+    const user = (req as any).user;
+
+    const { data, error } = await supabase
+        .from('attendances')
+        .select('event_id, events(*, attendances(count))')
+        .eq('user_id', user.id);
+
+    if (error) return res.status(500).json({ error: error.message });
+
+    const events = data.map((a: any) => a.events);
+    return res.json(events);
+});
 
 //GET /profiles/:id - ver perfis de utilizadores
 router.get('/:id', async (req: Request, res: Response) => {
@@ -76,6 +90,21 @@ router.put('/', authMiddleware, async (req: Request, res: Response) => {
     if(error) return res.status(500).json({ error: error.message });
 
     return res.status(201).json(data);
+});
+
+// GET /profiles/:id/events — eventos criados por um utilizador
+router.get('/:id/events', async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const { data, error } = await supabase
+        .from('events')
+        .select('*, attendances(count)')
+        .eq('user_id', id)
+        .order('date', { ascending: true });
+
+    if (error) return res.status(500).json({ error: error.message });
+
+    return res.json(data);
 });
 
 export default router; 
