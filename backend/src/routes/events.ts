@@ -13,7 +13,7 @@ router.get('/', async (req: Request, res: Response) => {
   //começa a construir a query ao supabase
   let query = supabase
     .from('events')        // vai à tabela events
-    .select('*')           // seleciona todas as colunas
+    .select('*, attendances(count)')           // seleciona todas as colunas
     .gte('date', new Date().toISOString().split('T')[0])  // só eventos de hoje em diante
     .order('date', { ascending: true });                  // ordena por data crescente
 
