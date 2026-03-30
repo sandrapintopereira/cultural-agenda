@@ -30,4 +30,30 @@ export class EventService {
     return this.http.get<Event>(`${this.apiUrl}/${id}`);
   }
 
+  attendEvent(eventId: string): Observable<object> {
+    return from(this.auth.getToken()).pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
+        return this.http.post(`${this.apiUrl}/${eventId}/attend`, {}, {headers});
+      })
+    );
+  }
+
+  unattendEvent(eventId: string): Observable<void> {
+    return from(this.auth.getToken()).pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        return this.http.delete<void>(`${this.apiUrl}/${eventId}/attend`, { headers });
+      })
+    );
+  }
+
+  checkAttendance(eventId: string): Observable<{ attending: boolean}> {
+    return from(this.auth.getToken()).pipe(
+    switchMap(token => {
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+      return this.http.get<{ attending: boolean }>(`${this.apiUrl}/${eventId}/attend`, { headers });
+    })
+  );
+  }
 }
