@@ -19,7 +19,11 @@ export class ProfileService {
   }
 
   async updateProfile(profileData: UserProfile): Promise<ProfileResponse> {
-    return firstValueFrom(this.http.put<ProfileResponse>(this.apiUrl, profileData));
+    const token = await this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return firstValueFrom(
+      this.http.put<ProfileResponse>(this.apiUrl, profileData, { headers })
+    );
   }
 
   getProfileEvents(id: string): Observable<Event[]> {

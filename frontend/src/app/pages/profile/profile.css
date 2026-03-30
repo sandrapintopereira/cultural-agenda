@@ -1,0 +1,231 @@
+.profile-wrapper {
+  background-color: var(--color-bg);
+  min-height: 100vh;
+}
+
+.profile-hero {
+  background-color: #382414;
+  color: white;
+  padding: 60px 60px 50px;
+}
+
+.profile-hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.profile-type {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.profile-hero h1 {
+  font-family: var(--font-serif);
+  font-size: 52px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.profile-hero .bio {
+  font-size: 15px;
+  opacity: 0.75;
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.profile-hero .website {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+}
+
+.profile-hero .website:hover { color: white; }
+
+.edit-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 10px 24px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+
+.edit-btn:hover { background: rgba(255,255,255,0.2); }
+
+.profile-body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 60px 60px;
+}
+
+.edit-form {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 30px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 14px;
+  background: var(--color-bg);
+  color: #1a1a1a;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.save-btn {
+  background: #382414;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  align-self: flex-start;
+  transition: background 0.2s;
+}
+
+.save-btn:hover { background: #1a0f08; }
+
+.events-section {
+  margin-bottom: 60px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.section-header h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+}
+
+.section-count {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.event-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 22px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.type-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-accent);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.event-card h3 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  flex: 1;
+}
+
+.event-meta {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  font-size: 11px;
+}
+
+.price { text-transform: uppercase; font-weight: 700; color: #aaa; }
+.price.free { color: #2f855a; }
+.attend-count { color: #aaa; }
+
+.empty {
+  font-size: 14px;
+  color: #aaa;
+  padding: 20px 0;
+}
+
+@media (max-width: 767px) {
+  .profile-hero { padding: 40px 20px; }
+
+  .profile-hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .profile-hero h1 { font-size: 32px; }
+
+  .edit-btn { width: 100%; text-align: center; }
+
+  .profile-body { padding: 30px 20px; }
+
+  .events-grid { grid-template-columns: 1fr; }
+}
