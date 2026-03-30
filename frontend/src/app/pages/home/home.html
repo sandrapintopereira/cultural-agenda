@@ -49,7 +49,7 @@
               <span class="price" [class.free]="event.is_free">
                 {{ event.is_free ? 'FREE' : 'PAID ENTRY' }}
               </span>
-              <span class="count"> {{ event.attend_count?.[0]?.count ?? 0 }} are planning to go</span>
+              <span class="count"> {{ event.attendances?.[0]?.count ?? 0 }} are planning to go</span>
             </div>
           </div>
         } @empty {
@@ -74,7 +74,7 @@
           <div class="highlight-box popular" [routerLink]="['/events', popularEvent.id]">
             <small>MOST WANTED</small>
             <h4>{{ popularEvent.title }}</h4>
-            <p>Join {{ popularEvent.attend_count?.[0]?.count ?? 0 }} others</p>
+            <p>Join {{ popularEvent.attendances?.[0]?.count ?? 0 }} others</p>
           </div>
         }
       </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventService } from '../../services/events';
 import { Auth } from '../../services/auth';
 import { Event } from '../../interfaces/event';
@@ -11,7 +11,7 @@ import { ProfileResponse } from '../../interfaces/userProfile';
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './event-detail.html',
   styleUrl: './event-detail.css'
 })
