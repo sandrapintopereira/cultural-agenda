@@ -1,1 +1,119 @@
-<p>profile works!</p>
+@if (loading()) {
+  <p>Loading...</p>
+} @else if (profile()) {
+  <div class="profile-wrapper">
+
+    <div class="profile-hero">
+      <div class="profile-hero-inner">
+        <div class="profile-info">
+          <span class="profile-type">{{ profile()!.type }}</span>
+          <h1>{{ profile()!.name }}</h1>
+          @if (profile()!.bio) {
+            <p class="bio">{{ profile()!.bio }}</p>
+          }
+          @if (profile()!.website) {
+            <a [href]="profile()!.website" target="_blank" class="website">
+              {{ profile()!.website }}
+            </a>
+          }
+        </div>
+        @if (isOwnProfile()) {
+          <button class="edit-btn" (click)="toggleEdit()">
+            {{ isEditing() ? 'Cancel' : 'Edit profile' }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="profile-body">
+
+      @if (isEditing()) {
+        <div class="edit-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" [(ngModel)]="editForm.name">
+          </div>
+          <div class="form-group">
+            <label for="type">Type</label>
+            <select id="type" [(ngModel)]="editForm.type">
+              <option value="individual">Individual</option>
+              <option value="collective">Collective</option>
+              <option value="artist">Artist</option>
+              <option value="venue">Venue</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="bio">Bio</label>
+            <textarea id="bio" [(ngModel)]="editForm.bio"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="website">Website</label>
+            <input id="website" type="text" [(ngModel)]="editForm.website">
+          </div>
+          <button class="save-btn" (click)="saveProfile()">Save</button>
+        </div>
+      }
+
+      <section class="events-section">
+        <div class="section-header">
+          <h2>Events</h2>
+          <span class="section-count">{{ createdEvents().length }}</span>
+        </div>
+        @if (createdEvents().length === 0) {
+          <p class="empty">No events created yet.</p>
+        } @else {
+          <div class="events-grid">
+            @for (event of createdEvents(); track event.id) {
+              <div class="event-card" [routerLink]="['/events', event.id]">
+                <div>
+                  <span class="type-tag">{{ event.type }}</span>
+                  <h3>{{ event.title }}</h3>
+                  <p class="event-meta">{{ event.date | date:'dd MMM yyyy' }} • {{ formatTime(event.time) }} • {{ event.location }}</p>
+                </div>
+                <div class="card-footer">
+                  <span class="price" [class.free]="event.is_free">
+                    {{ event.is_free ? 'Free' : 'Paid' }}
+                  </span>
+                  <span class="attend-count">{{ event.attendances?.[0]?.count ?? 0 }} going</span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </section>
+
+      @if (isOwnProfile()) {
+        <section class="events-section">
+          <div class="section-header">
+            <h2>Going to</h2>
+            <span class="section-count">{{ attendingEvents().length }}</span>
+          </div>
+          @if (attendingEvents().length === 0) {
+            <p class="empty">No events planned yet.</p>
+          } @else {
+            <div class="events-grid">
+              @for (event of attendingEvents(); track event.id) {
+                <div class="event-card" [routerLink]="['/events', event.id]">
+                  <div>
+                    <span class="type-tag">{{ event.type }}</span>
+                    <h3>{{ event.title }}</h3>
+                    <p class="event-meta">{{ event.date | date:'dd MMM yyyy' }} • {{ formatTime(event.time) }} • {{ event.location }}</p>
+                  </div>
+                  <div class="card-footer">
+                    <span class="price" [class.free]="event.is_free">
+                      {{ event.is_free ? 'Free' : 'Paid' }}
+                    </span>
+                    <span class="attend-count">{{ event.attendances?.[0]?.count ?? 0 }} going</span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </section>
+      }
+
+    </div>
+  </div>
+} @else {
+  <p>Profile not found.</p>
+}

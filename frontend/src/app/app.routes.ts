@@ -7,15 +7,17 @@ import { Register } from './pages/register/register';
 import { Profile } from './pages/profile/profile';
 import { About } from './pages/about/about';
 import { authGuard } from './services/auth.guard';
+import { EventEdit } from './pages/event-edit/event-edit';
 
 export const routes: Routes = [
     { path: '', component: Home},
     { path: 'events/new', component: EventNew, canActivate: [authGuard]},
     { path: 'events/:id', component: EventDetail},
+    { path: 'events/:id/edit', component: EventEdit, canActivate: [authGuard] },
     { path: 'login', component: Login},
     { path: 'register', component: Register},
     { path: 'profile', component: Profile, canActivate: [authGuard]},
     { path: 'profile/:id', component: Profile},
     { path: 'about', component: About},
-    { path: '**', redirectTo: ''}
+    { path: '**', redirectTo: ''},
 ];

@@ -47,9 +47,14 @@
   padding: 18px;
   background: transparent;
   border: none;
-  color: white;
+  color: rgb(231, 213, 213);
   font-size: 14px;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-grid option {
+  background: white;
+  color: #333;
 }
 
 .search-grid input::placeholder { color: rgba(255,255,255,0.4); }

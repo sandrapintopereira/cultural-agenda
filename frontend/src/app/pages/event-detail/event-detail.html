@@ -47,6 +47,16 @@
             </div>
         </div>
     }
+    @if (isOwner) {
+      <div class="owner-actions">
+        <button class="edit-event-btn" [routerLink]="['/events', event()!.id, 'edit']">
+          Edit event
+        </button>
+        <button class="delete-event-btn" (click)="deleteEvent()">
+          Delete event
+        </button>
+      </div>
+    }
     <div class="detail-footer">
       <span class="attend-count">
         {{ event()!.attendances?.[0]?.count ?? 0 }} people are going
