@@ -1,17 +1,15 @@
-/* --- LAYOUT GERAL --- */
 .home-wrapper {
-  background-color: var(--color-bg); /* O teu verde suave */
+  background-color: var(--color-bg);
 }
 
-/* --- HERO SECTION --- */
 .hero-section {
-  background-color: #382414; /* Castanho profundo */
+  background-color: #382414;
   color: white;
-  padding: 80px 60px 50px; /* Mais padding nas laterais */
+  padding: 80px 60px 50px;
 }
 
 .hero-content {
-  max-width: 1300px; /* Largura máxima maior para o conteúdo respirar */
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -31,20 +29,17 @@
   display: block;
 }
 
-/* --- BARRA DE PESQUISA (Ajustada) --- */
 .search-bar {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  
-  /* NOVO: Pesquisa mais curta e centrada */
-  max-width: 900px; /* Reduzimos a largura máxima */
-  margin: 0; /* Centramos se necessário, ou mantemos à esquerda conforme a referência */
+  max-width: 900px;
+  margin: 0;
 }
 
 .search-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Proporção mais curta */
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
 }
 
 .search-grid input, 
@@ -59,16 +54,13 @@
 
 .search-grid input::placeholder { color: rgba(255,255,255,0.4); }
 
-/* --- CONTENT LAYOUT (Main vs Sidebar) --- */
 .content-layout {
-  max-width: 1300px; /* Mesma largura da hero */
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 60px 60px; /* Espaço nas laterais */
+  padding: 60px 60px;
   display: grid;
-  
-  /* NOVO: Proporção para grelha de eventos (3 fr) vs Sidebar (1 fr) */
   grid-template-columns: 3fr 300px; 
-  gap: 50px; /* Mais espaço entre as colunas */
+  gap: 50px;
 }
 
 .section-title {
@@ -77,32 +69,22 @@
   margin-bottom: 40px;
 }
 
-/* --- GRELHA DE EVENTOS (Onde os cards vivem) --- */
-.events-main {
-  /* No-op, grid definido no pai */
-}
-
 .events-grid {
   display: grid;
-  
-  /* NOVO: Grelha automática que empilha cards quadrados */
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-  gap: 30px; /* Espaço entre os cards */
+  gap: 30px;
 }
 
-/* --- EVENT CARD MINIMAL (Look Quadrado) --- */
 .event-card-minimal {
   background: white;
   border: 1px solid var(--color-border);
-  border-radius: 4px; /* Cantos ligeiramente arredondados */
+  border-radius: 4px;
   padding: 25px;
-  
-  /* NOVO: Para forçar o look quadrado */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 280px; 
-  aspect-ratio: 1 / 1; /* Força quadrado perfeito, mas pode ser min-height */
+  aspect-ratio: 1 / 1;
   
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
@@ -113,7 +95,6 @@
   box-shadow: 0 10px 20px rgba(0,0,0,0.03);
 }
 
-/* Info dentro do card */
 .type-tag {
   font-size: 11px;
   text-transform: uppercase;
@@ -142,9 +123,8 @@
 
 .event-details span { font-size: 16px; }
 
-/* Rodapé do Card */
 .card-footer {
-  margin-top: auto; /* Empurra para o fundo */
+  margin-top: auto;
   padding-top: 15px;
   border-top: 1px solid #eee;
   display: flex;
@@ -157,9 +137,8 @@
 .price { text-transform: uppercase; font-weight: bold; }
 .price.free { color: #2f855a; }
 
-/* --- SIDEBAR DE HIGHLIGHTS (Mais à direita) --- */
 .highlights-sidebar {
-  background: #E6EEE2; /* Verde suave da tua referência */
+  background: #E6EEE2;
   padding: 30px;
   border-radius: 4px;
   height: fit-content;
