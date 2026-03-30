@@ -1,1 +1,84 @@
-<p>home works!</p>
+<div class="home-wrapper">
+  
+  <section class="hero-section">
+    <div class="hero-content">
+      <small class="subtitle">CULTURAL DISCOVERY</small>
+      <h1>Find the spirit of the city in every event.</h1>
+      
+      <div class="search-bar">
+        <div class="search-grid">
+          <input type="text" [(ngModel)]="searchTerm" placeholder="Search title...">
+          
+          <select [(ngModel)]="selectedType">
+            <option value="">All Categories</option>
+            <option value="concert">Concert</option>
+            <option value="exhibition">Exhibition</option>
+            <option value="theatre">Theatre</option>
+            <option value="reading">Reading</option>
+            <option value="reading">Others</option>
+          </select>
+
+          <input type="date" [(ngModel)]="selectedDate">
+          <input type="text" [(ngModel)]="selectedLocation" placeholder="Location...">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="content-layout">
+    
+    <main class="events-main">
+      <h2 class="section-title">Agenda</h2>
+
+      <div class="events-grid">
+        @for (event of filteredEvents; track event.id) {
+          <div class="event-card-minimal" [routerLink]="['/events', event.id]">
+            <div class="card-top">
+              <span class="type-tag">{{ event.type }}</span>
+            </div>
+            
+            <div class="card-body">
+              <h3>{{ event.title }}</h3>
+              <div class="event-details">
+                <p> {{ event.location }}</p>
+                <p> {{ event.date | date:'dd MMM' }} • {{ formatTime(event.time) }}</p>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span class="price" [class.free]="event.is_free">
+                {{ event.is_free ? 'FREE' : 'PAID ENTRY' }}
+              </span>
+              <span class="count"> {{ event.attend_count?.[0]?.count ?? 0 }} are planning to go</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-msg">No events found for these filters.</div>
+        }
+      </div>
+    </main>
+
+    <aside class="highlights-sidebar">
+      <div class="sidebar-inner">
+        <h3>Highlights</h3>
+
+        @if (upcomingEvent) {
+          <div class="highlight-box" [routerLink]="['/events', upcomingEvent.id]">
+            <small>SOON</small>
+            <h4>{{ upcomingEvent.title }}</h4>
+            <p>{{ upcomingEvent.date | date:'mediumDate' }}</p>
+          </div>
+        }
+
+        @if (popularEvent) {
+          <div class="highlight-box popular" [routerLink]="['/events', popularEvent.id]">
+            <small>MOST WANTED</small>
+            <h4>{{ popularEvent.title }}</h4>
+            <p>Join {{ popularEvent.attend_count?.[0]?.count ?? 0 }} others</p>
+          </div>
+        }
+      </div>
+    </aside>
+
+  </div>
+</div>
