@@ -55,4 +55,23 @@ router.delete('/:id/attend', authMiddleware, async (req: Request, res: Response)
     return res.status(204).send();
 });
 
+//GET - verificar se user já marcou presença
+router.get('/:id/attend', authMiddleware, async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const user_id = (req as any).user.id;
+
+    const { data, error } = await supabase 
+        .from('attendances')
+        .select('id')
+        .eq('event_id', id)
+        .eq('user_id', user_id)
+        .single();
+
+    if(error && error.code !== 'PGRST116') {
+        return res.status(500).json({ error: error.message });
+    }
+
+    return res.json({ attending: !!data });
+})
+
 export default router;
