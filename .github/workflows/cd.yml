@@ -27,7 +27,8 @@ jobs:
           export const environment = {
             production: true,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}'
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }}'
           };
           EOF
 
