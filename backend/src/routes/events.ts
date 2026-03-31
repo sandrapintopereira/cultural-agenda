@@ -32,6 +32,32 @@ router.get('/', async (req: Request, res: Response) => {
   return res.json(data);
 });
 
+//rota GET - pending events
+router.get('/pending', authMiddleware, async (req: Request, res: Response) => {
+  const user = (req as AuthenticatedRequest).user;
+  if(!user) return res.status(401).json({ error: 'Unauthorized '})
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single();
+
+  if (!profile || profile.role !== 'admin') {
+    return res.status(403).json({ error: 'Forbidden: admins only.' });
+  }
+
+  const { data, error } = await supabase
+    .from('events')
+    .select('*, attendances(count)')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: true });
+
+  if (error) return res.status(500).json({ error: error.message });
+
+  return res.json(data);
+});
+
 //rota GET /events/:id - devolve o detalhe de um evento específico
 router.get('/:id', async (req: Request, res: Response) => {
     //para extrair o id do evento
