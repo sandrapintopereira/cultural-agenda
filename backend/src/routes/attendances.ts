@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { supabase } from '../config/supabase.js';
 import { authMiddleware } from '../middleware/auth.js';
+import { AuthenticatedRequest } from '../middleware/auth.types.js';
 
 const router = Router();
 
@@ -10,7 +11,9 @@ router.post('/:id/attend', authMiddleware, async (req: Request, res: Response) =
 
     const { id } = req.params;
 
-    const user_id = (req as any).user.id; //extrai o id do user autenticado
+    const user = (req as AuthenticatedRequest).user;
+    
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     //verifica se o evento existe antes de registar presença
     const { data: event, error: eventError } = await supabase
@@ -27,7 +30,7 @@ router.post('/:id/attend', authMiddleware, async (req: Request, res: Response) =
     //para inserir o id do utlizador na tabela
     const { data, error } = await supabase
         .from('attendances')
-        .insert([{ event_id: id, user_id }]) //para associar o user ao evento
+        .insert([{ event_id: id, user_id: user.id }]) //para associar o user ao evento
         .select()
         .single();
 
@@ -41,14 +44,16 @@ router.delete('/:id/attend', authMiddleware, async (req: Request, res: Response)
 
     const { id } = req.params;
 
-    const user_id = (req as any).user.id; //extrai o id do user autenticado
+    const user = (req as AuthenticatedRequest).user;
+    
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     //para eliminar presença na tabela
     const { error } = await supabase
         .from('attendances')
         .delete()
         .eq('event_id', id) //filtra pelo evento
-        .eq('user_id', user_id); //filtra pelo user
+        .eq('user_id', user.id); //filtra pelo user
 
     if(error) return res.status(500).json({ error: error.message });
 
@@ -58,13 +63,15 @@ router.delete('/:id/attend', authMiddleware, async (req: Request, res: Response)
 //GET - verificar se user já marcou presença
 router.get('/:id/attend', authMiddleware, async (req: Request, res: Response) => {
     const { id } = req.params;
-    const user_id = (req as any).user.id;
+    const user = (req as AuthenticatedRequest).user;
+    
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     const { data, error } = await supabase 
         .from('attendances')
         .select('id')
         .eq('event_id', id)
-        .eq('user_id', user_id)
+        .eq('user_id', user.id)
         .single();
 
     if(error && error.code !== 'PGRST116') {

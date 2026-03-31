@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { supabase } from '../config/supabase.js';
 import { authMiddleware } from '../middleware/auth.js';
+import { AuthenticatedRequest } from '../middleware/auth.types.js';
 
 const router = Router();
 
@@ -13,7 +14,8 @@ router.get('/', async (req: Request, res: Response) => {
   //começa a construir a query ao supabase
   let query = supabase
     .from('events')        // vai à tabela events
-    .select('*, attendances(count)')           // seleciona todas as colunas
+    .select('*, attendances(count)')  
+    .eq('status', 'approved') //só eventos aprovados
     .gte('date', new Date().toISOString().split('T')[0])  // só eventos de hoje em diante
     .order('date', { ascending: true });                  // ordena por data crescente
 
@@ -50,7 +52,9 @@ router.get('/:id', async (req: Request, res: Response) => {
 router.post('/', authMiddleware, async (req: Request, res: Response) => {
     //dados do evento que vem no body do pedido
     const { title, type, date, time, location, description, is_free } = req.body;
-    const user = (req as any).user;
+    const user = (req as AuthenticatedRequest).user;
+
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     //validação de campos obrigatórios
     if(!title || !type || !date || !time || !location) {
@@ -96,7 +100,9 @@ router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
 
     //dados atualizados do body
     const { title, type, date, time, location, description, is_free } = req.body;
-    const user = (req as any).user;
+    const user = (req as AuthenticatedRequest).user;
+
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     //validação de campos obrigatórios
     if(!title || !type || !date || !time || !location) {
@@ -154,7 +160,9 @@ router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
 router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
 
     const { id } = req.params;
-    const user = (req as any).user;
+     const user = (req as AuthenticatedRequest).user;
+
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     const { error } = await supabase
         .from('events')
@@ -167,5 +175,41 @@ router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
     //204 - sem conteúdo aka eliminado
     return res.status(204).send();
 });
+
+//rota PATCH events/:id/status - só o admin pode aprovar/rejeitar
+router.patch('/:id/status', authMiddleware, async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    const user = (req as AuthenticatedRequest).user;
+
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
+
+    const validStatus = ['pending', 'approved', 'rejected'];
+    if(!validStatus.includes(status)) {
+        return res.status(400).json({ error: 'Invalid status.' });
+    }
+
+    //verifica se é o admin
+    const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+    if(profileError || !profile || profile.role !== 'admin') {
+        return res.status(403).json({ error: 'Forbidden: admins only.' });
+    }
+
+    const { data, error } = await supabase
+        .from('events')
+        .update({ status })
+        .eq('id', id)
+        .select()
+        .single();
+    
+    if(error) return res.status(500).json({ error: error.message });
+
+    return res.json(data);
+})
 
 export default router; 
