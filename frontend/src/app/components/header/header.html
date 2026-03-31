@@ -9,6 +9,9 @@
       @if (user$ | async) {
         <a routerLink="/profile" routerLinkActive="active">Profile</a>
       }
+      @if (isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active">Admin</a>
+      }
     </nav>
 
     <div class="header-actions">

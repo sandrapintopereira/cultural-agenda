@@ -74,6 +74,12 @@
                   <span class="price" [class.free]="event.is_free">
                     {{ event.is_free ? 'Free' : 'Paid' }}
                   </span>
+                  <span class="status-badge"
+                        [class.approved]="event.status === 'approved'"
+                        [class.rejected]="event.status === 'rejected'"
+                        [class.pending]="event.status === 'pending'">
+                    {{ event.status }}
+                  </span>
                   <span class="attend-count">{{ event.attendances?.[0]?.count ?? 0 }} going</span>
                 </div>
               </div>
