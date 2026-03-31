@@ -1,11 +1,14 @@
 import { Router, Request, Response } from 'express';
 import { supabase } from '../config/supabase.js';
 import { authMiddleware } from '../middleware/auth.js';
+import { AuthenticatedRequest } from '../middleware/auth.types.js';
 
 const router = Router();
 // GET /profiles/me/attending — eventos que o utilizador logado vai
 router.get('/me/attending', authMiddleware, async (req: Request, res: Response) => {
-    const user = (req as any).user;
+    const user = (req as AuthenticatedRequest).user;
+
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     const { data, error } = await supabase
         .from('attendances')
@@ -49,7 +52,9 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
     }
 
     //usa o id do utilizador autenticado 
-    const user = (req as any).user;
+    const user = (req as AuthenticatedRequest).user;
+
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     const { data, error } = await supabase
         .from('profiles')
@@ -78,7 +83,9 @@ router.put('/', authMiddleware, async (req: Request, res: Response) => {
     }
 
     //usa o id do utilizador autenticado 
-    const user = (req as any).user;
+    const user = (req as AuthenticatedRequest).user;
+    
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
 
     const { data, error } = await supabase
         .from('profiles')
