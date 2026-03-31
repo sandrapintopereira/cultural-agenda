@@ -75,4 +75,22 @@ export class EventService {
     );
   }
 
+  updateEventStatus(id: string, status: 'approved' | 'rejected'): Observable<Event> {
+    return from(this.auth.getToken()).pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        return this.http.patch<Event>(`${this.apiUrl}/${id}/status`, { status }, { headers });
+      })
+    )
+  }
+
+  getPendingEvents(): Observable<Event[]> {
+    return from(this.auth.getToken()).pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        return this.http.get<Event[]>(`${this.apiUrl}/pending`, { headers });
+      })
+    )
+  }
+
 }

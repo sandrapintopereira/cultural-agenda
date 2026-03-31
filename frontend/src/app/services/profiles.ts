@@ -37,4 +37,14 @@ export class ProfileService {
       this.http.get<Event[]>(`${this.apiUrl}/me/attending`, { headers })
     );
   }
+
+  async getMyProfile(): Promise<ProfileResponse> {
+    const token = await this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const user = await this.authService.getUser();
+    if(!user) throw new Error('Not authenticated');
+    return firstValueFrom(
+      this.http.get<ProfileResponse>(`${this.apiUrl}/${user.id}`, { headers })
+    );
+  }
 }

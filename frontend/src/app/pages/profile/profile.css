@@ -212,6 +212,30 @@
   padding: 20px 0;
 }
 
+.status-badge {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.status-badge.approved {
+  background: #c6f6d5;
+  color: #276749;
+}
+
+.status-badge.pending {
+  background: #fefcbf;
+  color: #744210;
+}
+
+.status-badge.rejected {
+  background: #fed7d7;
+  color: #9b2c2c;
+}
+
 @media (max-width: 767px) {
   .profile-hero { padding: 40px 20px; }
 

@@ -7,5 +7,6 @@ export interface UserProfile {
 
 export interface ProfileResponse extends UserProfile {
   id: string;
+  role: 'user' | 'admin';
   created_at?: string;
 }
