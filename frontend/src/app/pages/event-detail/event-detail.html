@@ -40,7 +40,7 @@
                 <span class="organizer-name">{{ organizer()!.name }}</span>
                 <span class="organizer-type">{{ organizer()!.type }}</span>
                 @if(organizer()!.website) {
-                    <a href="organizer()!.website" target="_blank" class="organizer-website" (click)="$event.stopPropagation()">
+                    <a [href]="organizer()!.website" target="_blank" class="organizer-website" (click)="$event.stopPropagation()">
                         {{ organizer()!.website }}
                     </a>
                 }

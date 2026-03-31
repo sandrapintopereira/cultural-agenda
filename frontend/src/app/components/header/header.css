@@ -125,22 +125,23 @@
     }
 
     .logo { 
-        font-size: 18px;
+        font-size: 20px;
         flex: 1;
     }
 
     .btn-create {
-        padding: 8px 16px;
+        padding: 8px 14px;
         font-size: 13px;
-        order: 2;
+        order: 1;
     }
 
     .header-actions {
-        order: 2;
+        order: 1;
     }
 
     .btn-logout {
         padding: 8px 14px;
         font-size: 13px;
+        order: 2; 
     }
 }

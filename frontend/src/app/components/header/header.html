@@ -5,13 +5,13 @@
 
     <nav class="nav">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Explore</a>
-      <a routerLink="/about" routerLinkActive="active">About</a>
       @if (user$ | async) {
         <a routerLink="/profile" routerLinkActive="active">Profile</a>
       }
       @if (isAdmin()) {
-        <a routerLink="/admin" routerLinkActive="active">Admin</a>
+        <a routerLink="/admin" routerLinkActive="active">Management</a>
       }
+      <a routerLink="/about" routerLinkActive="active">About</a>
     </nav>
 
     <div class="header-actions">
