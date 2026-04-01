@@ -38,7 +38,10 @@
           <label for="date">Date</label>
           <input id="date" type="date" formControlName="date">
           @if (eventForm.get('date')?.touched && eventForm.get('date')?.invalid) {
-            <small class="error-msg">Date is required.</small>
+            <small class="error-msg">
+                @if (eventForm.get('date')?.errors?.['required']) { Date is required. }
+                @if (eventForm.get('date')?.errors?.['pastDate']) { Date must be in the future. }
+            </small>          
           }
         </div>
 

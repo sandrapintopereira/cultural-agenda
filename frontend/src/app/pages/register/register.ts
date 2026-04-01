@@ -35,7 +35,7 @@ export class Register implements OnInit {
     type: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    bio: [''],
+    bio: ['', [Validators.maxLength(300)]],
     website: ['', [Validators.pattern('https?://.+')]],
   });
 

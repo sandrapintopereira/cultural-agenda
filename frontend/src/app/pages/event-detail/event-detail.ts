@@ -30,6 +30,7 @@ export class EventDetail implements OnInit {
 
   ngOnInit(): void {
     // subscreve o utilizador atual
+    window.scrollTo(0, 0);
     this.auth.user$.subscribe(user => this.currentUser.set(user));
 
     const id = this.route.snapshot.paramMap.get('id');
