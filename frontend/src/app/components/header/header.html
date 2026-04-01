@@ -1,0 +1,28 @@
+<header class="header">
+  <div class="header-inner">
+
+    <a routerLink="/" class="logo">Cultural Agenda</a>
+
+    <nav class="nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Explore</a>
+      @if (user$ | async) {
+        <a routerLink="/profile" routerLinkActive="active">Profile</a>
+      }
+      @if (isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active">Management</a>
+      }
+      <a routerLink="/about" routerLinkActive="active">About</a>
+    </nav>
+
+    <div class="header-actions">
+      @if (user$ | async) {
+        <a routerLink="/events/new" class="btn-create">Create Event</a>
+        <button class="btn-logout" (click)="onLogout()">Logout</button>
+      } @else {
+        <a routerLink="/login" class="btn-login">Login</a>
+        <a routerLink="/register" class="btn-create">Register</a>
+      }
+    </div>
+
+  </div>
+</header>

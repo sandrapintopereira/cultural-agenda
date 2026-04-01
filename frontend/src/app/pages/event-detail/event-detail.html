@@ -1,0 +1,76 @@
+@if (loading()) {
+  <p>Loading...</p>
+} @else if (event()) {
+  <div class="detail-wrapper">
+
+    <div class="detail-header">
+      <span class="type-tag">{{ event()!.type }}</span>
+      <h1>{{ event()!.title }}</h1>
+
+      <div class="meta">
+        <div class="meta-item">
+            <span class="label">Date</span>
+            <span class="value">{{ event()!.date | date:'dd MMMM yyyy' }}</span>
+        </div>
+        <div class="meta-item">
+            <span class="label">Time</span>
+            <span class="value">{{ formatTime(event()!.time) }}</span>
+        </div>
+        <div class="meta-item">
+            <span class="label">Location</span>
+            <span class="value">{{ event()!.location }}</span>
+        </div>
+        <div class="meta-item">
+            <span class="label">Entry</span>
+            <span class="value" [class.free]="event()!.is_free">
+            {{ event()!.is_free ? 'Free entry' : 'Paid entry' }}
+            </span>
+        </div>
+        </div> 
+    </div>
+
+    <div class="detail-body">
+      <p class="description">{{ event()!.description }}</p>
+    </div>
+
+    @if(organizer()) {
+        <div class="organizer">
+            <span class="label">Organized by</span>
+            <div class="organizer-info" [routerLink]="['/profile', event()!.user_id]" style="cursor: pointer">
+                <span class="organizer-name">{{ organizer()!.name }}</span>
+                <span class="organizer-type">{{ organizer()!.type }}</span>
+                @if(organizer()!.website) {
+                    <a [href]="organizer()!.website" target="_blank" class="organizer-website" (click)="$event.stopPropagation()">
+                        {{ organizer()!.website }}
+                    </a>
+                }
+            </div>
+        </div>
+    }
+    @if (isOwner) {
+      <div class="owner-actions">
+        <button class="edit-event-btn" [routerLink]="['/events', event()!.id, 'edit']">
+          Edit event
+        </button>
+        <button class="delete-event-btn" (click)="deleteEvent()">
+          Delete event
+        </button>
+      </div>
+    }
+    <div class="detail-footer">
+      <span class="attend-count">
+        {{ event()!.attendances?.[0]?.count ?? 0 }} people are going
+      </span>
+
+      <button 
+        class="attend-btn" 
+        [class.attending]="isAttending()"
+        (click)="toggleAttend()">
+        {{ isAttending() ? 'Cancel attendance' : 'I\'m going!' }}
+      </button>
+    </div>
+
+  </div>
+} @else {
+  <p>Event not found.</p>
+}

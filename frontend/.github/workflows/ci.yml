@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Generate environment files
+        working-directory: ./frontend
+        run: |
+          mkdir -p src/environments
+          cat > src/environments/environment.ts <<EOF
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }}',
+          };
+          EOF
+
+          cat > src/environments/environment.development.ts <<EOF
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            apiUrl: '${{ secrets.API_URL }}',
+          };
+          EOF
+
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run lint
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build

@@ -1,0 +1,55 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Welcome Back</h2>
+    <p class="auth-subtitle">Sign in to manage your cultural agenda</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          id="email"
+          type="email" 
+          formControlName="email" 
+          placeholder="Enter your email"
+          [class.input-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+        >
+        
+        @if (loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched) {
+          <span class="error-msg">Email is required.</span>
+        }
+        
+        @if (loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched) {
+          <span class="error-msg">Please enter a valid email.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          id="password"
+          type="password" 
+          formControlName="password" 
+          placeholder="Enter your password"
+          [class.input-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        >
+        
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <span class="error-msg">Password must be at least 6 characters.</span>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <p class="server-error">{{ errorMessage }}</p>
+      }
+
+      <button type="submit" [disabled]="loginForm.invalid" class="btn-primary">
+        Sign In
+      </button>
+
+      <p class="auth-footer">
+        Don't have an account? <a routerLink="/register">Register here</a>
+      </p>
+    </form>
+  </div>
+</div>

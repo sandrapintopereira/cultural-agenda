@@ -1,0 +1,57 @@
+import { Component, inject } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { EventService } from '../../services/events';
+import { Auth } from '../../services/auth';
+import { Router } from '@angular/router';
+import { CreateEventDTO, Event } from '../../interfaces/event';
+
+@Component({
+  selector: 'app-event-new',
+  imports: [ReactiveFormsModule],
+  templateUrl: './event-new.html',
+  styleUrl: './event-new.css',
+})
+export class EventNew {
+  private fb = inject(FormBuilder);
+  private eventService = inject(EventService);
+  private auth = inject(Auth);
+  private router = inject(Router);
+
+  eventForm = this.fb.group({
+    title: ['', [Validators.required, Validators.minLength(5)]],
+    type: ['concert' as Event['type'], Validators.required],
+    date: ['', Validators.required],
+    time: ['', Validators.required],
+    location: ['', Validators.required],
+    description: ['', [Validators.required, Validators.maxLength(500)]],
+    is_free: [true]
+  });
+
+  async onSubmit(): Promise<void> {
+    if(this.eventForm.valid) {
+      const user = await this.auth.getUser();
+      const formValues = this.eventForm.getRawValue();
+
+      if(!user) {
+        this.router.navigate(['/login']);
+        return;
+      }
+
+      const newEvent: CreateEventDTO = {
+        title: formValues.title!,
+        type: formValues.type as Event['type'],
+        date: formValues.date!,
+        time: formValues.time!,
+        location: formValues.location!,
+        description: formValues.description!,
+        is_free: !!formValues.is_free,
+        user_id: user.id
+      };
+
+    this.eventService.createEvent(newEvent).subscribe({
+      next: () => this.router.navigate(['']), 
+      error: (err: Error) => console.error('Error creating event:', err)
+    });
+  }
+  }
+}

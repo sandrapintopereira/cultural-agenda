@@ -1,0 +1,153 @@
+.admin-wrapper {
+  background-color: var(--color-bg);
+  min-height: 100vh;
+}
+
+.admin-hero {
+  background-color: #0000009f;
+  color: white;
+  padding: 60px 60px 50px;
+}
+
+.admin-hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.subtitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.admin-hero h1 {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+.admin-body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 60px 60px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.section-header h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+}
+
+.section-count {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  gap: 20px;
+}
+
+.event-row-info {
+  flex: 1;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.event-row-info:hover { opacity: 0.6; }
+
+.type-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-accent);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.event-row-info h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.event-row-info p {
+  font-size: 13px;
+  color: #888;
+}
+
+.event-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.approve-btn {
+  background: #2f855a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.approve-btn:hover { background: #276749; }
+
+.reject-btn {
+  background: transparent;
+  color: #c53030;
+  border: 1px solid #c53030;
+  padding: 10px 20px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.reject-btn:hover { background: #fff5f5; }
+
+.empty {
+  font-size: 14px;
+  color: #aaa;
+  padding: 20px 0;
+}
+
+@media (max-width: 767px) {
+  .admin-hero { padding: 40px 20px; }
+  .admin-hero h1 { font-size: 32px; }
+  .admin-body { padding: 30px 20px; }
+
+  .event-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .event-actions { width: 100%; }
+
+  .approve-btn,
+  .reject-btn {
+    flex: 1;
+    text-align: center;
+  }
+}

@@ -1,0 +1,38 @@
+<div class="admin-wrapper">
+
+  <div class="admin-hero">
+    <div class="admin-hero-inner">
+      <small class="subtitle">MANAGEMENT PANEL</small>
+      <h1>Event moderation</h1>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    @if (loading()) {
+      <p>Loading...</p>
+    } @else if (pendingEvents().length === 0) {
+      <p class="empty">No pending events. All caught up!</p>
+    } @else {
+      <div class="section-header">
+        <h2>Pending</h2>
+        <span class="section-count">{{ pendingEvents().length }}</span>
+      </div>
+
+      <div class="events-list">
+        @for (event of pendingEvents(); track event.id) {
+          <div class="event-row">
+            <div class="event-row-info" [routerLink]="['/events', event.id]">
+              <span class="type-tag">{{ event.type }}</span>
+              <h3>{{ event.title }}</h3>
+              <p>{{ event.date | date:'dd MMM yyyy' }} • {{ formatTime(event.time) }} • {{ event.location }}</p>
+            </div>
+            <div class="event-actions">
+              <button class="approve-btn" (click)="approve(event.id)">Approve</button>
+              <button class="reject-btn" (click)="reject(event.id)">Reject</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
