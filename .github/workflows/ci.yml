@@ -9,7 +9,6 @@ on:
 jobs:
   lint-and-build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,7 +34,6 @@ jobs:
             apiUrl: '${{ secrets.API_URL }}',
           };
           EOF
-
           cat > src/environments/environment.development.ts <<EOF
           export const environment = {
             production: false,
@@ -52,3 +50,25 @@ jobs:
       - name: Build frontend
         working-directory: ./frontend
         run: npm run build
+
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
+
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test
+        env:
+          SUPABASE_URL: "mock"
+          SUPABASE_KEY: "mock"
