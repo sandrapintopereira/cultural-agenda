@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { EventService } from '../../services/events';
 import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class EventNew {
   eventForm = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(5)]],
     type: ['concert' as Event['type'], Validators.required],
-    date: ['', Validators.required],
+    date: ['', [Validators.required, this.futureDateValidator]],
     time: ['', Validators.required],
     location: ['', Validators.required],
     description: ['', [Validators.required, Validators.maxLength(500)]],
@@ -54,4 +54,13 @@ export class EventNew {
     });
   }
   }
+
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) return null;
+    const selected = new Date(control.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return selected < today ? { pastDate: true } : null;
+  }
+
 }
