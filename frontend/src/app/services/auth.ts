@@ -29,7 +29,7 @@ export class Auth {
 
   //para registo com email e pass
   async register(email: string, password: string, userData: UserProfile) {
-    return await this.supabase.auth.signUp({ 
+    return this.supabase.auth.signUp({ 
       email, 
       password, 
       options: {

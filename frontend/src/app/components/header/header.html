@@ -9,7 +9,11 @@
         <a routerLink="/profile" routerLinkActive="active">Profile</a>
       }
       @if (isAdmin()) {
-        <a routerLink="/admin" routerLinkActive="active">Management</a>
+        <a routerLink="/admin" routerLinkActive="active">Management
+          @if(pendingCount() > 0) {
+            <span class="pending-badge">{{ pendingCount() }}</span>
+          }
+        </a>
       }
       <a routerLink="/about" routerLinkActive="active">About</a>
     </nav>

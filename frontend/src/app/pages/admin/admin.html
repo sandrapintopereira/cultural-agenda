@@ -11,29 +11,53 @@
     <button class="back-btn" (click)="goBack()">← Back</button>
     @if (loading()) {
       <p>Loading...</p>
-    } @else if (pendingEvents().length === 0) {
-      <p class="empty">No pending events. All caught up!</p>
     } @else {
-      <div class="section-header">
-        <h2>Pending</h2>
-        <span class="section-count">{{ pendingEvents().length }}</span>
-      </div>
+      @if (pendingEvents().length === 0) {
+        <p class="empty">No pending events. All caught up!</p>
+      } @else {
+        <div class="section-header">
+          <h2>Pending</h2>
+          <span class="section-count">{{ pendingEvents().length }}</span>
+        </div>
 
-      <div class="events-list">
-        @for (event of pendingEvents(); track event.id) {
-          <div class="event-row">
-            <div class="event-row-info" [routerLink]="['/events', event.id]">
-              <span class="type-tag">{{ event.type }}</span>
-              <h3>{{ event.title }}</h3>
-              <p>{{ event.date | date:'dd MMM yyyy' }} • {{ formatTime(event.time) }} • {{ event.location }}</p>
+        <div class="events-list">
+          @for (event of pendingEvents(); track event.id) {
+            <div class="event-row">
+              <div class="event-row-info" [routerLink]="['/events', event.id]">
+                <span class="type-tag">{{ event.type }}</span>
+                <h3>{{ event.title }}</h3>
+                <p>{{ event.date | date:'dd MMM yyyy' }} • {{ formatTime(event.time) }} • {{ event.location }}</p>
+              </div>
+              <div class="event-actions">
+                <button class="approve-btn" (click)="approve(event.id)">Approve</button>
+                <button class="reject-btn" (click)="reject(event.id)">Reject</button>
+              </div>
             </div>
-            <div class="event-actions">
-              <button class="approve-btn" (click)="approve(event.id)">Approve</button>
-              <button class="reject-btn" (click)="reject(event.id)">Reject</button>
+          }
+        </div>
+      }
+
+      @if (approvedEvents().length > 0) {
+        <div class="section-header" style="margin-top: 2rem">
+          <h2>Approved</h2>
+          <span class="section-count">{{ approvedEvents().length }}</span>
+        </div>
+
+        <div class="events-list">
+          @for (event of approvedEvents(); track event.id) {
+            <div class="event-row">
+              <div class="event-row-info" [routerLink]="['/events', event.id]">
+                <span class="type-tag">{{ event.type }}</span>
+                <h3>{{ event.title }}</h3>
+                <p>{{ event.date | date:'dd MMM yyyy' }} • {{ formatTime(event.time) }} • {{ event.location }}</p>
+              </div>
+              <div class="event-actions">
+                <button class="reject-btn" (click)="reject(event.id)">Revoke</button>
+              </div>
             </div>
-          </div>
-        }
-      </div>
+          }
+        </div>
+      }
     }
   </div>
 </div>
