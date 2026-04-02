@@ -16,9 +16,11 @@ export class Admin implements OnInit {
 
   pendingEvents = signal<Event[]>([]);
   loading = signal(true);
+  approvedEvents = signal<Event[]>([]);
 
   ngOnInit(): void {
     this.loadPendingEvents();
+    this.loadApprovedEvents();
   }
 
   loadPendingEvents(): void {
@@ -31,6 +33,12 @@ export class Admin implements OnInit {
     });
   }
 
+  loadApprovedEvents(): void {
+    this.eventService.getEvents().subscribe({
+      next: (events) => this.approvedEvents.set(events)
+    });
+  }
+
   approve(id: string): void {
     this.eventService.updateEventStatus(id, 'approved').subscribe({
       next: () => this.pendingEvents.update(events => events.filter(e => e.id !== id))
@@ -39,7 +47,9 @@ export class Admin implements OnInit {
 
   reject(id: string): void {
     this.eventService.updateEventStatus(id, 'rejected').subscribe({
-      next: () => this.pendingEvents.update(events => events.filter(e => e.id !== id))
+      next: () => { this.pendingEvents.update(events => events.filter(e => e.id !== id));
+        this.approvedEvents.update(events => events.filter(e => e.id !== id));
+      }
     });
   }
 
