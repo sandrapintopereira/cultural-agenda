@@ -21,9 +21,15 @@
             <span class="value">{{ event()!.location }}</span>
         </div>
         <div class="meta-item">
-            <span class="label">Entry</span>
-            <span class="value" [class.free]="event()!.is_free">
-            {{ event()!.is_free ? 'Free entry' : 'Paid entry' }}
+          <span class="label">Entry</span>
+          <span class="value" [class.free]="event()!.is_free">
+            @if (event()!.is_free) {
+              Free entry
+            } @else if (event()!.price) {
+              {{ event()!.price | currency:'EUR':'symbol':'1.2-2' }}
+            } @else {
+              Paid entry
+            }
             </span>
         </div>
         </div> 
@@ -61,13 +67,14 @@
       <span class="attend-count">
         {{ event()!.attendances?.[0]?.count ?? 0 }} people are going
       </span>
-
-      <button 
-        class="attend-btn" 
-        [class.attending]="isAttending()"
-        (click)="toggleAttend()">
-        {{ isAttending() ? 'Cancel attendance' : 'I\'m going!' }}
-      </button>
+      @if(!isOwner) {
+        <button 
+          class="attend-btn" 
+          [class.attending]="isAttending()"
+          (click)="toggleAttend()">
+          {{ isAttending() ? 'Cancel attendance' : 'I\'m going!' }}
+        </button>
+      }
     </div>
 
   </div>

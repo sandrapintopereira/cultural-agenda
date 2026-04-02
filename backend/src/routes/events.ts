@@ -77,7 +77,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 //rota POST - para criar novo evento
 router.post('/', authMiddleware, async (req: Request, res: Response) => {
     //dados do evento que vem no body do pedido
-    const { title, type, date, time, location, description, is_free } = req.body;
+    const { title, type, date, time, location, description, is_free, price } = req.body;
     const user = (req as AuthenticatedRequest).user;
 
     if(!user) return res.status(401).json({ error: 'Unauthorized '})
@@ -110,7 +110,7 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
     //para inserir o evento na tabela 
     const { data, error } = await supabase
         .from('events')
-        .insert([{ title, type, date, time, location, description, is_free, user_id: user.id }])
+        .insert([{ title, type, date, time, location, description, is_free, price: is_free ? null : price, user_id: user.id }])
         .select()   //para devolver o evento criado
         .single();  
 
@@ -125,7 +125,7 @@ router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
     const { id } = req.params;
 
     //dados atualizados do body
-    const { title, type, date, time, location, description, is_free } = req.body;
+    const { title, type, date, time, location, description, is_free, price } = req.body;
     const user = (req as AuthenticatedRequest).user;
 
     if(!user) return res.status(401).json({ error: 'Unauthorized '})
@@ -172,7 +172,7 @@ router.put('/:id', authMiddleware, async (req: Request, res:Response) => {
     //atualiza o evento na tabela
     const { data, error } = await supabase
         .from('events')
-        .update({ title, type, date, time, location, description, is_free })
+        .update({ title, type, date, time, location, description, is_free, price: is_free ? null : price})
         .eq('id', id)
         .select()
         .single();

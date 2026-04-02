@@ -84,13 +84,24 @@
         <input type="checkbox" id="is_free" formControlName="is_free">
         <label for="is_free">This is a free cultural event</label>
       </div>
+      @if(!eventForm.get('is_free')?.value) {
+          <div class="form-group">
+            <label for="price">Ticket Price (€)</label>
+            <input 
+              id="price" 
+              type="number" 
+              min="0"
+              step="0.01"
+              formControlName="price" 
+              placeholder="Enter price if not free">
+          </div>
+        }
 
       <div class="form-actions">
         <button type="submit" class="btn-primary" [disabled]="eventForm.invalid">
           Publish Event
         </button>
       </div>
-
     </form>
     <button class="back-btn" (click)="goBack()">← Back</button>
   </div>

@@ -47,7 +47,13 @@
 
             <div class="card-footer">
               <span class="price" [class.free]="event.is_free">
-                {{ event.is_free ? 'FREE' : 'PAID ENTRY' }}
+                @if (event.is_free) {
+                  FREE
+                } @else if (event.price) {
+                  {{ event.price | currency:'EUR':'symbol':'1.2-2' }}
+                } @else {
+                  PAID
+                }
               </span>
               <span class="count"> {{ event.attendances?.[0]?.count ?? 0 }} are planning to go</span>
             </div>

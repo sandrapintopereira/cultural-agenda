@@ -27,7 +27,8 @@ export class EventEdit implements OnInit {
     time: ['', Validators.required],
     location: ['', Validators.required],
     description: ['', [Validators.required, Validators.maxLength(500)]],
-    is_free: [true]
+    is_free: [true],
+    price: [null as number | null]
   });
 
   ngOnInit(): void {
@@ -66,7 +67,8 @@ export class EventEdit implements OnInit {
         location: formValues.location!,
         description: formValues.description!,
         is_free: !!formValues.is_free,
-        user_id: user.id
+        user_id: user.id,
+        price: formValues.is_free ? null : (formValues.price ?? null)
       };
 
       this.eventService.updateEvent(this.eventId, updatedEvent).subscribe({
