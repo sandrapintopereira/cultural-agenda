@@ -54,6 +54,24 @@
 
 .about-block p:last-child { margin-bottom: 0; }
 
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--color-muted, #888);
+  padding: 0;
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: var(--color-primary, #333);
+}
+
 @media (max-width: 767px) {
   .about-hero { padding: 40px 20px; }
   .about-hero h1 { font-size: 32px; }

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { EventService } from '../../services/events';
 import { Event } from '../../interfaces/event';
@@ -12,6 +12,7 @@ import { Event } from '../../interfaces/event';
 })
 export class Admin implements OnInit {
   private eventService = inject(EventService);
+  private location = inject(Location);
 
   pendingEvents = signal<Event[]>([]);
   loading = signal(true);
@@ -44,5 +45,9 @@ export class Admin implements OnInit {
 
   formatTime(time: string): string {
     return time?.slice(0, 5) ?? '';
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

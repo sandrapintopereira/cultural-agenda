@@ -8,6 +8,7 @@
   </div>
 
   <div class="admin-body">
+    <button class="back-btn" (click)="goBack()">← Back</button>
     @if (loading()) {
       <p>Loading...</p>
     } @else if (pendingEvents().length === 0) {

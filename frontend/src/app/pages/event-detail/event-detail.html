@@ -2,7 +2,7 @@
   <p>Loading...</p>
 } @else if (event()) {
   <div class="detail-wrapper">
-
+    <button class="back-btn" (click)="goBack()">← Back</button>
     <div class="detail-header">
       <span class="type-tag">{{ event()!.type }}</span>
       <h1>{{ event()!.title }}</h1>

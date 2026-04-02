@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventService } from '../../services/events';
 import { Auth } from '../../services/auth';
@@ -21,6 +21,7 @@ export class EventDetail implements OnInit {
   private eventService = inject(EventService);
   private auth = inject(Auth);
   private profileService = inject(ProfileService);
+  private location = inject(Location);
 
   event = signal<Event | null>(null);
   currentUser = signal<User | null>(null);
@@ -101,5 +102,9 @@ export class EventDetail implements OnInit {
         error: (err) => console.error('Error deleting event:', err)
       });
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

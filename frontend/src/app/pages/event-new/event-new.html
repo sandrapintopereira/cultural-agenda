@@ -1,7 +1,7 @@
 <div class="create-event-container">
   
   <h2>Create New Cultural Event</h2>
-  
+
   <div class="event-form-card">
     <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
       
@@ -92,5 +92,6 @@
       </div>
 
     </form>
+    <button class="back-btn" (click)="goBack()">← Back</button>
   </div>
 </div>

@@ -4,6 +4,7 @@ import { EventService } from '../../services/events';
 import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
 import { CreateEventDTO, Event } from '../../interfaces/event';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-event-new',
@@ -16,6 +17,7 @@ export class EventNew {
   private eventService = inject(EventService);
   private auth = inject(Auth);
   private router = inject(Router);
+  private location = inject(Location);
 
   eventForm = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(5)]],
@@ -63,4 +65,7 @@ export class EventNew {
     return selected < today ? { pastDate: true } : null;
   }
 
+  goBack(): void {
+    this.location.back();
+  }
 }

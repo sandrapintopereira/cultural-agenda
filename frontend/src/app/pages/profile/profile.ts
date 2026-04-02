@@ -7,6 +7,7 @@ import { ProfileService } from '../../services/profiles';
 import { ProfileResponse, UserProfile } from '../../interfaces/userProfile';
 import { Event } from '../../interfaces/event';
 import { User } from '@supabase/supabase-js';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,7 @@ export class Profile implements OnInit {
   private router = inject(Router);
   private auth = inject(Auth);
   private profileService = inject(ProfileService);
+  private location = inject(Location);
 
   profile = signal<ProfileResponse | null>(null);
   createdEvents = signal<Event[]>([]);
@@ -94,5 +96,9 @@ export class Profile implements OnInit {
 
   formatTime(time: string): string {
     return time?.slice(0, 5) ?? '';
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
