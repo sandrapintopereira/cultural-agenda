@@ -105,6 +105,18 @@
   border-color: var(--color-text);
 }
 
+.admin-link { position: relative; display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.pending-badge {
+  background: #e53e3e;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 99px;
+  line-height: 1;
+}
+
 @media (max-width: 767px) {
     .header-inner {
         height: auto;
