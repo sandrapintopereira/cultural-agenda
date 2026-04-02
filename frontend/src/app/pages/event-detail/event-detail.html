@@ -67,7 +67,7 @@
       <span class="attend-count">
         {{ event()!.attendances?.[0]?.count ?? 0 }} people are going
       </span>
-      @if(!isOwner) {
+      @if(!isOwner && event()!.status === 'approved') {
         <button 
           class="attend-btn" 
           [class.attending]="isAttending()"
