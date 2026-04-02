@@ -102,12 +102,19 @@ router.put('/', authMiddleware, async (req: Request, res: Response) => {
 // GET /profiles/:id/events — eventos criados por um utilizador
 router.get('/:id/events', async (req: Request, res: Response) => {
     const { id } = req.params;
+    const { onlyApproved } = req.query;
 
-    const { data, error } = await supabase
+    let query = supabase
         .from('events')
         .select('*, attendances(count)')
         .eq('user_id', id)
         .order('date', { ascending: true });
+
+    if (onlyApproved === 'true') {
+        query = query.eq('status', 'approved');
+    }
+
+    const { data, error } = await query;
 
     if (error) return res.status(500).json({ error: error.message });
 

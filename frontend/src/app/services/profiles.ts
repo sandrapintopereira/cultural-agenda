@@ -26,8 +26,9 @@ export class ProfileService {
     );
   }
 
-  getProfileEvents(id: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${this.apiUrl}/${id}/events`);
+  getProfileEvents(id: string, onlyApproved = false): Observable<Event[]> {
+    const params = onlyApproved ? '?onlyApproved=true' : '';
+    return this.http.get<Event[]>(`${this.apiUrl}/${id}/events${params}`);
   }
 
   async getAttendingEvents(): Promise<Event[]> {

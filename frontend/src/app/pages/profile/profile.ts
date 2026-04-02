@@ -70,7 +70,8 @@ export class Profile implements OnInit {
   }
 
   loadCreatedEvents(id: string): void {
-    this.profileService.getProfileEvents(id).subscribe({
+    const onlyApproved = !this.isOwnProfile();
+    this.profileService.getProfileEvents(id, onlyApproved).subscribe({
       next: (events) => this.createdEvents.set(events)
     });
   }
