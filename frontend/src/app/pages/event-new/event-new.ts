@@ -26,7 +26,8 @@ export class EventNew {
     time: ['', Validators.required],
     location: ['', Validators.required],
     description: ['', [Validators.required, Validators.maxLength(500)]],
-    is_free: [true]
+    is_free: [true],
+    price: [null as number | null]
   });
 
   async onSubmit(): Promise<void> {
@@ -47,7 +48,8 @@ export class EventNew {
         location: formValues.location!,
         description: formValues.description!,
         is_free: !!formValues.is_free,
-        user_id: user.id
+        user_id: user.id,
+        price: formValues.is_free ? null : (formValues.price ?? null)
       };
 
     this.eventService.createEvent(newEvent).subscribe({

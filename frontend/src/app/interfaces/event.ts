@@ -11,6 +11,7 @@ export interface Event {
     created_at: string;
     status: 'pending' | 'approved' | 'rejected';
     attendances?: { count: number}[];
+    price?: number | null;
 }
 
 //omit para esconder o id e o created_at
