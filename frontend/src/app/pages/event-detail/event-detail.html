@@ -61,13 +61,14 @@
       <span class="attend-count">
         {{ event()!.attendances?.[0]?.count ?? 0 }} people are going
       </span>
-
-      <button 
-        class="attend-btn" 
-        [class.attending]="isAttending()"
-        (click)="toggleAttend()">
-        {{ isAttending() ? 'Cancel attendance' : 'I\'m going!' }}
-      </button>
+      @if(!isOwner) {
+        <button 
+          class="attend-btn" 
+          [class.attending]="isAttending()"
+          (click)="toggleAttend()">
+          {{ isAttending() ? 'Cancel attendance' : 'I\'m going!' }}
+        </button>
+      }
     </div>
 
   </div>
