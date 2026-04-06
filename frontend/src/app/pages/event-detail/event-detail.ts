@@ -98,7 +98,7 @@ export class EventDetail implements OnInit {
 
     if (confirm('Are you sure you want to delete this event?')) {
       this.eventService.deleteEvent(ev.id).subscribe({
-        next: () => this.router.navigate(['']),
+        next: () => this.router.navigate(['/profile']),
         error: (err) => console.error('Error deleting event:', err)
       });
     }
